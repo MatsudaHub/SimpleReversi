@@ -5,9 +5,9 @@ int ROW = 8;
 int COLUMN = 8;
 int MASSSIZE = BOADSIZE/COLUMN;
 int[][] stone = new int[COLUMN][ROW];
+int player = 1;  //player is 1 or -1
 
 void setup() {
-  print(MASSSIZE);
   size(BOADSIZE+200, BOADSIZE);
   for (int i=0; i<COLUMN; i++) {
     for (int j=0; j<ROW; j++) {
@@ -31,8 +31,6 @@ void draw() {
     line(0, i*MASSSIZE, BOADSIZE, i*MASSSIZE);
   }
 
-  //push mass
-
   //draw stone
   for (int i=0; i<COLUMN; i++) {
     for (int j=0; j<ROW; j++) {
@@ -51,11 +49,182 @@ void draw() {
 void mousePressed() {
   for (int i=0; i<COLUMN; i++) {
     for (int j=0; j<ROW; j++) {
+
       if (dist(mouseX, mouseY, i*MASSSIZE+0.5*MASSSIZE, j*MASSSIZE+0.5*MASSSIZE)<0.5*MASSSIZE) {
         if (stone[i][j]==0) {
-          stone[i][j] = 1;
+          if (player==1) {
+            stone[i][j] = 1;
+            stoneTurn(i, j);
+          } else if (player==-1) {
+            stone[i][j] = -1;
+            stoneTurn(i, j);
+          }
+          player = -player;
         } else {
-          stone[i][j] = -stone[i][j];
+        }
+      }
+    }
+  }
+}
+
+void stoneTurn(int ii, int jj) {
+  //UpCheck
+  if (jj!=0) {
+    if (stone[ii][jj-1]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (jj-k>=0) {
+          if (stone[ii][jj-k]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii][jj-k]==-player) {
+            count++;
+          } else if (stone[ii][jj-k]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii][jj-l] = player;
+            }
+          }
+        }
+      }
+    }
+  }
+  //DownCheck
+  if (jj!=7) {
+    if (stone[ii][jj+1]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (jj+k<=7) {
+          if (stone[ii][jj+k]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii][jj+k]==-player) {
+            count++;
+          } else if (stone[ii][jj+k]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii][jj+l] = player;
+            }
+          }
+        }
+      }
+    }
+  }
+  //LeftCheck
+  if (ii!=0) {
+    if (stone[ii-1][jj]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (ii-k>=0) {
+          if (stone[ii-k][jj]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii-k][jj]==-player) {
+            count++;
+          } else if (stone[ii-k][jj]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii-l][jj] = player;
+            }
+          }
+        }
+      }
+    }
+  }
+  //RightCheck
+  if (ii!=7) {
+    if (stone[ii+1][jj]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (ii+k<=7) {
+          if (stone[ii+k][jj]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii+k][jj]==-player) {
+            count++;
+          } else if (stone[ii+k][jj]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii+l][jj] = player;
+            }
+          }
+        }
+      }
+    }
+  }
+  
+  //UpLeftCheck
+  if (jj!=0 && ii!=0) {
+    if (stone[ii-1][jj-1]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (jj-k>=0 && ii-k>=0) {
+          if (stone[ii-k][jj-k]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii-k][jj-k]==-player) {
+            count++;
+          } else if (stone[ii-k][jj-k]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii-l][jj-l] = player;
+            }
+          }
+        }
+      }
+    }
+  }
+  //DownLeftCheck
+  if (jj!=7 && ii!=0) {
+    if (stone[ii-1][jj+1]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (jj+k<=7 && ii-k>=0) {
+          if (stone[ii-k][jj+k]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii-k][jj+k]==-player) {
+            count++;
+          } else if (stone[ii-k][jj+k]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii-l][jj+l] = player;
+            }
+          }
+        }
+      }
+    }
+  }
+  //DownRightCheck
+  if (jj!=7 && ii!=7) {
+    if (stone[ii+1][jj+1]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (jj+k<=7 && ii+k<=7) {
+          if (stone[ii+k][jj+k]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii+k][jj+k]==-player) {
+            count++;
+          } else if (stone[ii+k][jj+k]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii+l][jj+l] = player;
+            }
+          }
+        }
+      }
+    }
+  }
+  //UpRightCheck
+  if (jj!=0 && ii!=7) {
+    if (stone[ii+1][jj-1]==-player) {
+      int count = 0;
+      for (int k=1; k<8; k++) {
+        if (jj-k>=0 && ii+k<=7) {
+          if (stone[ii+k][jj-k]==0) {
+            count = 0;
+            break;
+          } else if (stone[ii+k][jj-k]==-player) {
+            count++;
+          } else if (stone[ii+k][jj-k]==player) {
+            for (int l=1; l<=count; l++) {
+              stone[ii+l][jj-l] = player;
+            }
+          }
         }
       }
     }
