@@ -7,8 +7,12 @@ int ROW = 8;
 int MASSSIZE = BOADSIZE/COLUMN;
 int[][] stone = new int[COLUMN][ROW];
 int player = 1;
+int white_num = 2;
+int black_num = 2;
 
 void setup() {
+  textAlign(CENTER);
+  
   size(BOADSIZE+200, BOADSIZE);
   for (int i=0; i<COLUMN; i++) {
     for (int j=0; j<ROW; j++) {
@@ -45,6 +49,20 @@ void draw() {
       }
     }
   }
+  
+  //ScoreInformation
+  fill(255,255,255);
+  textSize(20);
+  text("The number of",BOADSIZE+100,100);
+  text("WHITE stone",BOADSIZE+100,120);
+  textSize(100);
+  text(white_num,BOADSIZE+100,200);
+  fill(0);
+  textSize(20);
+  text("The number of",BOADSIZE+100,300);
+  text("BLACK stone",BOADSIZE+100,320);
+  textSize(100);
+  text(black_num,BOADSIZE+100,400);
 }
 
 void mousePressed() {
@@ -88,7 +106,7 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("up"+count_sum+":");
+  //print("up"+count_sum+":");
 
   //DownCheck
   if (jj!=7) {
@@ -114,7 +132,7 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("down"+count_sum+":");
+  //print("down"+count_sum+":");
 
   //LeftCheck
   if (ii!=0) {
@@ -140,7 +158,7 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("left"+count_sum+":");
+  //print("left"+count_sum+":");
 
   //RightCheck
   if (ii!=7) {
@@ -166,7 +184,7 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("right"+count_sum+":");
+  //print("right"+count_sum+":");
 
   //UpLeftCheck
   if (jj!=0 && ii!=0) {
@@ -192,7 +210,7 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("ul"+count_sum+":");
+  //print("ul"+count_sum+":");
 
   //DownLeftCheck
   if (jj!=7 && ii!=0) {
@@ -218,7 +236,7 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("dl"+count_sum+":");
+  //print("dl"+count_sum+":");
 
   //DownRightCheck
   if (jj!=7 && ii!=7) {
@@ -244,7 +262,7 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("dr"+count_sum+":");
+  //print("dr"+count_sum+":");
 
   //UpRightCheck
   if (jj!=0 && ii!=7) {
@@ -270,8 +288,8 @@ void turnStone(int ii, int jj) {
       }
     }
   }
-  print("ur"+count_sum+":");
-  println("sum"+count_sum);
+  //print("ur"+count_sum+":");
+  println("sum="+count_sum+":");
 
   //playerChange
   if (count_sum>0) {
@@ -281,6 +299,19 @@ void turnStone(int ii, int jj) {
       stone[ii][jj] = -1;
     }
     player = -player;
+    
+    //stoneNum
+    white_num = 0;
+    black_num = 0;
+    for (int i=0; i<COLUMN; i++) {
+      for (int j=0; j<ROW; j++) {
+        if(stone[i][j]==1){
+          white_num++;
+        }else if(stone[i][j]==-1){
+          black_num++;
+        }
+      }
+    }
   }
 }
 
