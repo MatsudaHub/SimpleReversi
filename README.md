@@ -1,6 +1,4 @@
-# SimpleReversi
-This is reversi.
-
-
-## Programming language 
-Processing 2.2.1
+# processing-simplereversi
+This is reversi  
+## Environment
+Processing ver2.2.1
