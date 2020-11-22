@@ -13,7 +13,7 @@ int black_num = 2;
 void setup() {
   textAlign(CENTER);
   
-  size(BOADSIZE+200, BOADSIZE);
+  size(720, 520);
   for (int i=0; i<COLUMN; i++) {
     for (int j=0; j<ROW; j++) {
       stone[i][j] = 0;
